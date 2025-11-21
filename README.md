@@ -1,4 +1,4 @@
-# GC Scaffold
+# GC React Scaffold
 
 A production-ready Docker-based scaffold for React + Tailwind CSS applications with comprehensive development and production environments.
 
@@ -25,7 +25,7 @@ A production-ready Docker-based scaffold for React + Tailwind CSS applications w
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd gc-scaffold
+   cd gc-react
    ```
 
 2. **Start development environment**
@@ -75,7 +75,7 @@ The `dock` helper script provides convenient commands:
 ## Project Structure
 
 ```
-gc-scaffold/
+gc-react/
 ├── .storybook/         # Storybook configuration
 ├── docs/               # Documentation
 │   ├── architecture.md

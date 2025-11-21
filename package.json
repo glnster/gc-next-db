@@ -1,5 +1,5 @@
 {
-  "name": "gc-scaffold",
+  "name": "gc-react",
   "version": "1.0.0",
   "type": "module",
   "description": "Docker-based React + Tailwind CSS scaffold for local dev and production",

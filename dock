@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Docker helper script for GC Scaffold
+# Docker helper script for GC React Scaffold
 # Usage: dock [command] [options]
 
 set -e
 
 COMPOSE_FILE="docker-compose.yml"
 COMPOSE_PROD_FILE="docker-compose.prod.yml"
-PROJECT_NAME="gc-scaffold"
+PROJECT_NAME="gc-react"
 DEV_SERVICE="app-dev"
 PROD_SERVICE="app-prod"
 
@@ -47,23 +47,23 @@ is_running() {
 # Main commands
 cmd_dev() {
     local clear_cache=false
-    
+
     # Check for --clear-cache flag
     if [[ "$1" == "--clear-cache" ]]; then
         clear_cache=true
     fi
-    
+
     log_info "Starting development environment..."
-    
+
     # Stop any running containers
     stop_containers
-    
+
     # Clear cache if requested
     if [[ "$clear_cache" == true ]]; then
         log_info "Clearing Docker cache..."
         docker system prune -f
     fi
-    
+
     # Build and start dev container
     log_info "Building and starting dev container..."
     docker-compose -f "$COMPOSE_FILE" up --build
@@ -71,17 +71,17 @@ cmd_dev() {
 
 cmd_rebuild() {
     log_info "Rebuilding containers..."
-    
+
     stop_containers
-    
+
     log_info "Removing old images..."
     docker-compose -f "$COMPOSE_FILE" down --rmi local 2>/dev/null || true
     docker-compose -f "$COMPOSE_PROD_FILE" down --rmi local 2>/dev/null || true
-    
+
     log_info "Rebuilding from scratch..."
     docker-compose -f "$COMPOSE_FILE" build --no-cache
     docker-compose -f "$COMPOSE_PROD_FILE" build --no-cache
-    
+
     log_info "Rebuild complete!"
 }
 
@@ -93,20 +93,20 @@ cmd_stop() {
 
 cmd_detached() {
     log_info "Starting development environment in detached mode..."
-    
+
     stop_containers
-    
+
     docker-compose -f "$COMPOSE_FILE" up --build -d
-    
+
     log_info "Container started in detached mode."
     log_info "Use 'dock logs' to view logs or 'dock status' to check status."
 }
 
 cmd_prod() {
     log_info "Starting production environment..."
-    
+
     stop_containers
-    
+
     log_info "Building production container..."
     docker-compose -f "$COMPOSE_PROD_FILE" up --build
 }
@@ -127,7 +127,7 @@ cmd_prune() {
 cmd_status() {
     log_info "Container Status:"
     echo ""
-    
+
     echo "Development:"
     if is_running "$DEV_SERVICE" "$COMPOSE_FILE"; then
         echo -e "  Status: ${GREEN}Running${NC}"
@@ -135,7 +135,7 @@ cmd_status() {
     else
         echo -e "  Status: ${RED}Stopped${NC}"
     fi
-    
+
     echo ""
     echo "Production:"
     if is_running "$PROD_SERVICE" "$COMPOSE_PROD_FILE"; then
@@ -144,11 +144,11 @@ cmd_status() {
     else
         echo -e "  Status: ${RED}Stopped${NC}"
     fi
-    
+
     echo ""
     log_info "Port Mappings:"
     docker ps --filter "name=$PROJECT_NAME" --format "table {{.Names}}\t{{.Ports}}" 2>/dev/null || echo "  No containers running"
-    
+
     echo ""
     log_info "Resource Usage:"
     docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" $(docker ps -q --filter "name=$PROJECT_NAME") 2>/dev/null || echo "  No containers running"
@@ -157,7 +157,7 @@ cmd_status() {
 cmd_shell() {
     local service=$DEV_SERVICE
     local compose_file=$COMPOSE_FILE
-    
+
     # Check if production is running
     if is_running "$PROD_SERVICE" "$COMPOSE_PROD_FILE"; then
         service=$PROD_SERVICE
@@ -170,19 +170,19 @@ cmd_shell() {
         log_info "Start a container first with 'dock dev' or 'dock prod'"
         exit 1
     fi
-    
+
     docker-compose -f "$compose_file" exec "$service" /bin/sh
 }
 
 cmd_logs() {
     local service=""
     local compose_file=$COMPOSE_FILE
-    
+
     # Check for service argument
     if [[ -n "$1" ]]; then
         service="$1"
     fi
-    
+
     # Determine which compose file to use
     if is_running "$PROD_SERVICE" "$COMPOSE_PROD_FILE"; then
         compose_file=$COMPOSE_PROD_FILE
@@ -197,13 +197,13 @@ cmd_logs() {
         log_error "No containers are running!"
         exit 1
     fi
-    
+
     log_info "Following logs for $service..."
     docker-compose -f "$compose_file" logs -f "$service"
 }
 
 cmd_help() {
-    echo "GC Scaffold Docker Helper"
+    echo "GC React Scaffold Docker Helper"
     echo ""
     echo "Usage: dock [command] [options]"
     echo ""
