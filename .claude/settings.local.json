@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx prisma init)",
+      "Bash(cat:*)",
+      "Bash(.env)",
+      "Bash(npx prisma:*)",
+      "Bash(./dock stop:*)",
+      "Bash(./dock dev)",
+      "Bash(./dock rebuild:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

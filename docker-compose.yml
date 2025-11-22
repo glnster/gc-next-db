@@ -5,16 +5,35 @@ services:
       dockerfile: Dockerfile
     container_name: gc-react-dev
     ports:
-      - "${VITE_PORT:-5173}:5173"
+      - "${NEXT_PORT:-3000}:3000"
     volumes:
       - .:/app
       - /app/node_modules
+      - /app/.next
     environment:
       - NODE_ENV=development
-      - VITE_PORT=${VITE_PORT:-5173}
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/gc_react_db?schema=public
     env_file:
       - .env.development
+    depends_on:
+      - db
     stdin_open: true
     tty: true
     restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: gc-react-db
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gc_react_db
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
 

@@ -4,10 +4,10 @@ export function HomePage() {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            Welcome to GC React Scaffold
+            Welcome to GC React DB
           </h1>
           <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
-            A Docker-based React + Tailwind CSS scaffold
+            A Docker-based Next.js + Tailwind CSS + Prisma + Postgres scaffold
           </p>
           <section className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mt-8">
             <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
@@ -20,7 +20,7 @@ export function HomePage() {
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                Hot module replacement with Vite
+                Next.js with App Router
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
@@ -32,11 +32,11 @@ export function HomePage() {
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                Playwright for E2E testing
+                Prisma ORM with PostgreSQL
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                Storybook for component development
+                Playwright for E2E testing
               </li>
             </ul>
           </section>

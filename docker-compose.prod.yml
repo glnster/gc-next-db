@@ -5,22 +5,27 @@ services:
       dockerfile: Dockerfile.prod
     container_name: gc-react-prod
     ports:
-      - "${HTTP_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
-    volumes:
-      - ssl_certs:/etc/nginx/ssl:ro
+      - "${NEXT_PORT:-3000}:3000"
     environment:
       - NODE_ENV=production
-      - HTTP_PORT=${HTTP_PORT:-80}
-      - HTTPS_PORT=${HTTPS_PORT:-443}
-      - SSL_ENABLED=${SSL_ENABLED:-true}
-      - SSL_CERT_PATH=${SSL_CERT_PATH:-/etc/nginx/ssl/cert.pem}
-      - SSL_KEY_PATH=${SSL_KEY_PATH:-/etc/nginx/ssl/key.pem}
+      - DATABASE_URL=postgresql://postgres:postgres@db-prod:5432/gc_react_db?schema=public
     env_file:
       - .env.production
+    depends_on:
+      - db-prod
+    restart: unless-stopped
+
+  db-prod:
+    image: postgres:16-alpine
+    container_name: gc-react-db-prod
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gc_react_db
     restart: unless-stopped
 
 volumes:
-  ssl_certs:
-    external: false
+  postgres_data_prod:
 

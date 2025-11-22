@@ -1,46 +1,38 @@
 {
-  "name": "gc-react",
+  "name": "gc-react-db",
   "version": "1.0.0",
-  "type": "module",
-  "description": "Docker-based React + Tailwind CSS scaffold for local dev and production",
+  "description": "Docker-based Next.js + Tailwind CSS + Prisma + Postgres scaffold",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "next": "^14.0.4",
+    "@prisma/client": "^5.7.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
-    "@storybook/addon-essentials": "^7.6.0",
-    "@storybook/addon-interactions": "^7.6.0",
-    "@storybook/addon-links": "^7.6.0",
-    "@storybook/blocks": "^7.6.0",
-    "@storybook/react": "^7.6.0",
-    "@storybook/react-vite": "^7.6.0",
-    "@storybook/test": "^7.6.0",
+    "@types/node": "^20.10.5",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.55.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-config-next": "^14.0.4",
     "postcss": "^8.4.32",
-    "storybook": "^7.6.0",
+    "prisma": "^5.7.1",
     "tailwindcss": "^3.3.6",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "typescript": "^5.2.2"
   }
 }
 
