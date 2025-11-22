@@ -5,7 +5,7 @@ test.describe('Home Page', () => {
     await page.goto('/');
 
     // Check that the main heading is visible
-    await expect(page.getByRole('heading', { name: /Welcome to GC React Scaffold/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Welcome to GC Next.js + DB Scaffold/i })).toBeVisible();
   });
 
   test('should display the features list', async ({ page }) => {
@@ -29,20 +29,20 @@ test.describe('Home Page', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
 
-    await expect(page.getByRole('heading', { name: /Welcome to GC React Scaffold/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Welcome to GC Next.js + DB Scaffold/i })).toBeVisible();
 
     // Test tablet viewport
     await page.setViewportSize({ width: 768, height: 1024 });
-    await expect(page.getByRole('heading', { name: /Welcome to GC React Scaffold/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Welcome to GC Next.js + DB Scaffold/i })).toBeVisible();
 
     // Test desktop viewport
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await expect(page.getByRole('heading', { name: /Welcome to GC React Scaffold/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Welcome to GC Next.js + DB Scaffold/i })).toBeVisible();
   });
 
   test('should have proper page title', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/GC React Scaffold/i);
+    await expect(page).toHaveTitle(/GC Next.js + DB Scaffold/i);
   });
 });
 

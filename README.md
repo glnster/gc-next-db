@@ -1,6 +1,6 @@
-# GC React Scaffold
+# GC Next.js + DB Scaffold
 
-A production-ready Docker-based scaffold for React + Tailwind CSS applications with comprehensive development and production environments.
+A production-ready Docker-based scaffold for Next.js + Tailwind CSS applications with comprehensive development and production environments.
 
 ## Features
 

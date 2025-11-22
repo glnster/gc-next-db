@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Docker helper script for GC React Scaffold
+# Docker helper script for GC Next.js + DB Scaffold
 # Usage: dock [command] [options]
 
 set -e
 
 COMPOSE_FILE="docker-compose.yml"
 COMPOSE_PROD_FILE="docker-compose.prod.yml"
-PROJECT_NAME="gc-react"
+PROJECT_NAME="gc-next-db"
 DEV_SERVICE="app-dev"
 PROD_SERVICE="app-prod"
 
@@ -203,7 +203,7 @@ cmd_logs() {
 }
 
 cmd_help() {
-    echo "GC React Scaffold Docker Helper"
+    echo "GC Next.js + DB Scaffold Docker Helper"
     echo ""
     echo "Usage: dock [command] [options]"
     echo ""
