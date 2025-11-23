@@ -13,10 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Todo {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
+  title     String
+  completed Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

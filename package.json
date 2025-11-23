@@ -1,5 +1,5 @@
 {
-  "name": "gc-react-db",
+  "name": "gc-next-db",
   "version": "1.0.0",
   "description": "Docker-based Next.js + Tailwind CSS + Prisma + Postgres scaffold",
   "scripts": {

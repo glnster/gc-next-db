@@ -6,21 +6,21 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const user = await prisma.user.findUnique({
+    const todo = await prisma.todo.findUnique({
       where: { id: parseInt(params.id) },
     })
 
-    if (!user) {
+    if (!todo) {
       return NextResponse.json(
-        { error: 'User not found' },
+        { error: 'Todo not found' },
         { status: 404 }
       )
     }
 
-    return NextResponse.json(user)
+    return NextResponse.json(todo)
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch user' },
+      { error: 'Failed to fetch todo' },
       { status: 500 }
     )
   }
@@ -32,20 +32,20 @@ export async function PUT(
 ) {
   try {
     const body = await request.json()
-    const { email, name } = body
+    const { title, completed } = body
 
-    const user = await prisma.user.update({
+    const todo = await prisma.todo.update({
       where: { id: parseInt(params.id) },
       data: {
-        email,
-        name,
+        title,
+        completed,
       },
     })
 
-    return NextResponse.json(user)
+    return NextResponse.json(todo)
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to update user' },
+      { error: 'Failed to update todo' },
       { status: 500 }
     )
   }
@@ -56,14 +56,14 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    await prisma.user.delete({
+    await prisma.todo.delete({
       where: { id: parseInt(params.id) },
     })
 
-    return NextResponse.json({ message: 'User deleted successfully' })
+    return NextResponse.json({ message: 'Todo deleted successfully' })
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to delete user' },
+      { error: 'Failed to delete todo' },
       { status: 500 }
     )
   }

@@ -16,8 +16,8 @@ services:
     restart: unless-stopped
 
   db-prod:
-    image: postgres:16-alpine
-    container_name: gc-react-db-prod
+    image: postgres:latest
+    container_name: gc-next-db-prod
     volumes:
       - postgres_data_prod:/var/lib/postgresql/data
     environment:

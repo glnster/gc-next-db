@@ -3,13 +3,13 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET() {
   try {
-    const users = await prisma.user.findMany({
+    const todos = await prisma.todo.findMany({
       orderBy: { createdAt: 'desc' },
     })
-    return NextResponse.json(users)
+    return NextResponse.json(todos)
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch users' },
+      { error: 'Failed to fetch todos' },
       { status: 500 }
     )
   }
@@ -18,26 +18,26 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, name } = body
+    const { title, completed } = body
 
-    if (!email) {
+    if (!title) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Title is required' },
         { status: 400 }
       )
     }
 
-    const user = await prisma.user.create({
+    const todo = await prisma.todo.create({
       data: {
-        email,
-        name,
+        title,
+        completed: completed ?? false,
       },
     })
 
-    return NextResponse.json(user, { status: 201 })
+    return NextResponse.json(todo, { status: 201 })
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to create user' },
+      { error: 'Failed to create todo' },
       { status: 500 }
     )
   }

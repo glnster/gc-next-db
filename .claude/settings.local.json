@@ -9,7 +9,11 @@
       "Bash(./dock stop:*)",
       "Bash(./dock dev)",
       "Bash(./dock rebuild:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(./dock status:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker-compose down:*)"
     ],
     "deny": [],
     "ask": []

@@ -22,12 +22,12 @@ services:
     restart: unless-stopped
 
   db:
-    image: postgres:16-alpine
-    container_name: gc-react-db
+    image: postgres:latest
+    container_name: gc-next-db
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
