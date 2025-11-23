@@ -2,7 +2,7 @@
 
 ## Overview
 
-GC Scaffold uses Playwright for end-to-end (E2E) testing. Playwright provides cross-browser testing capabilities and excellent developer experience.
+GC Next DB uses Playwright for end-to-end (E2E) testing. Playwright provides cross-browser testing capabilities and excellent developer experience.
 
 ## Running Tests
 
@@ -57,7 +57,7 @@ npx playwright test --project=webkit
 Tests are configured in `playwright.config.ts`:
 
 - **Test Directory**: `./tests/e2e`
-- **Base URL**: `http://localhost:5173` (configurable via `PLAYWRIGHT_BASE_URL`)
+- **Base URL**: `http://localhost:3000` (configurable via `PLAYWRIGHT_BASE_URL`)
 - **Browsers**: Chromium, Firefox, WebKit
 - **Retries**: 2 retries on CI, 0 locally
 - **Screenshots**: Captured on failure

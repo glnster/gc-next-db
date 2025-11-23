@@ -5,7 +5,7 @@
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd gc-scaffold
+   cd gc-next-db
    ```
 
 2. **Start development environment**
@@ -14,7 +14,7 @@
    ```
 
 3. **Open your browser**
-   - Navigate to `http://localhost:5173`
+   - Navigate to `http://localhost:3000`
 
 ## Development Workflow
 
@@ -29,7 +29,9 @@ Use the `dock` helper script to start the development container:
 This will:
 - Stop any running containers
 - Build the development container
-- Start the container with live reload
+- Start both app and database containers
+- Run Prisma database migrations
+- Start Next.js dev server with live reload
 - Follow logs in the terminal
 
 ### Working with the Container
@@ -61,18 +63,57 @@ This will:
 
 ### Hot Module Replacement
 
-The development environment uses Vite's HMR (Hot Module Replacement):
+The development environment uses Next.js Fast Refresh:
 - Changes to source files are automatically reflected in the browser
-- No page refresh needed for most changes
+- React component state is preserved during updates
 - Fast feedback loop for development
+- Automatic compilation of TypeScript and CSS
+
+### Database Management
+
+#### Prisma Commands
+
+Access the database through Prisma:
+
+```bash
+# Generate Prisma Client (after schema changes)
+npm run db:generate
+
+# Push schema changes to database (dev only)
+npm run db:push
+
+# Create and run migrations
+npm run db:migrate
+
+# Open Prisma Studio (database GUI)
+npm run db:studio
+```
+
+#### Database Connection
+
+The database is accessible at:
+- **From app container**: `db:5432`
+- **From host machine**: `localhost:5432`
+
+Default credentials (development only):
+- User: `postgres`
+- Password: `postgres`
+- Database: `gc_react_db`
 
 ### Environment Variables
 
 Development environment variables are configured in `.env.development`:
 
 - `NODE_ENV`: Set to `development`
-- `VITE_PORT`: Port for the dev server (default: 5173)
-- `VITE_API_URL`: API endpoint URL
+- `NEXT_PORT`: Port for the dev server (default: 3000)
+- `DATABASE_URL`: PostgreSQL connection string
+
+Example `.env.development`:
+```env
+NODE_ENV=development
+NEXT_PORT=3000
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/gc_react_db?schema=public
+```
 
 ### Debugging
 
@@ -97,6 +138,15 @@ ps aux
 ./dock status
 ```
 
+**Debug database:**
+```bash
+# Open Prisma Studio
+npm run db:studio
+
+# Or connect with psql
+docker exec -it gc-next-db psql -U postgres -d gc_react_db
+```
+
 ### Rebuilding Containers
 
 If you need to rebuild containers from scratch:
@@ -117,6 +167,11 @@ This will:
 - Stop any containers using the port: `./dock stop`
 - Or change the port in `.env.development`
 
+**Database connection errors:**
+- Ensure database container is running: `docker ps`
+- Check DATABASE_URL in environment variables
+- Verify database is ready: `docker logs gc-next-db`
+
 **Changes not reflecting:**
 - Ensure the container is running: `./dock status`
 - Check that volumes are mounted correctly
@@ -124,18 +179,38 @@ This will:
 
 **Container won't start:**
 - Check Docker is running: `docker ps`
-- View logs: `docker-compose -f docker-compose.yml logs`
+- View logs: `docker-compose logs`
 - Rebuild: `./dock rebuild`
+
+**Prisma errors:**
+- Regenerate client: `npm run db:generate`
+- Reset database: `docker-compose down -v` (warning: deletes data)
+- Check schema syntax: Review `prisma/schema.prisma`
 
 ## Project Structure
 
 ```
-src/
-├── components/     # Reusable React components
-├── pages/         # Page components
-├── App.tsx        # Main app component
-├── main.tsx       # Application entry point
-└── index.css      # Global styles + Tailwind
+app/
+├── api/               # API route handlers
+│   └── todos/        # Todo CRUD endpoints
+│       ├── route.ts  # GET all, POST create
+│       └── [id]/
+│           └── route.ts  # GET, PUT, DELETE by id
+├── todos/            # Todo page
+│   └── page.tsx
+├── layout.tsx        # Root layout
+├── page.tsx          # Home page
+└── globals.css       # Global styles
+
+components/
+├── HomePage.tsx      # Home page component
+└── Navigation.tsx    # Navigation bar
+
+lib/
+└── prisma.ts         # Prisma client singleton
+
+prisma/
+└── schema.prisma     # Database schema
 ```
 
 ## Adding Dependencies
@@ -152,17 +227,73 @@ src/
    ./dock rebuild
    ```
 
+## Database Migrations
+
+### Creating Migrations
+
+1. **Update schema:**
+   Edit `prisma/schema.prisma`
+
+2. **Create migration:**
+   ```bash
+   npm run db:migrate
+   ```
+
+3. **Name your migration:**
+   Provide a descriptive name when prompted
+
+### Applying Migrations
+
+Migrations are automatically applied when starting the dev container.
+
+Manual application:
+```bash
+npx prisma migrate dev
+```
+
+### Resetting Database
+
+To reset the database and apply all migrations:
+
+```bash
+docker-compose down -v  # Remove volumes
+docker-compose up -d    # Recreate with fresh database
+```
+
 ## Running Tests
 
 See [Testing Guide](./testing.md) for detailed testing instructions.
 
-## Storybook
-
-Start Storybook for component development:
-
+Basic test commands:
 ```bash
-npm run storybook
+npm run test:e2e          # Run all E2E tests
+npm run test:e2e:ui       # Run in UI mode
+npm run test:e2e:headed   # Run with visible browser
 ```
 
-Access at `http://localhost:6006`
+## API Development
 
+### Testing API Endpoints
+
+Using curl:
+```bash
+# Create a todo
+curl -X POST http://localhost:3000/api/todos \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Test todo"}'
+
+# Get all todos
+curl http://localhost:3000/api/todos
+
+# Update a todo
+curl -X PUT http://localhost:3000/api/todos/1 \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Updated todo", "completed": true}'
+
+# Delete a todo
+curl -X DELETE http://localhost:3000/api/todos/1
+```
+
+### UI Testing
+
+Visit http://localhost:3000/todos to test the full CRUD interface.
