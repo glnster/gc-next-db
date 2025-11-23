@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    container_name: gc-react-prod
+    container_name: gc-next-db-prod
     ports:
       - "${NEXT_PORT:-3000}:3000"
     environment:

@@ -25,7 +25,7 @@ A production-ready Docker-based scaffold for Next.js + Tailwind CSS applications
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd gc-react
+   cd gc-next-db
    ```
 
 2. **Start development environment**
@@ -75,7 +75,7 @@ The `dock` helper script provides convenient commands:
 ## Project Structure
 
 ```
-gc-react/
+gc-next-db/
 ├── .storybook/         # Storybook configuration
 ├── docs/               # Documentation
 │   ├── architecture.md

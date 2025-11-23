@@ -3,7 +3,7 @@ import './globals.css'
 import { Navigation } from '@/components/Navigation'
 
 export const metadata: Metadata = {
-  title: 'GC React DB',
+  title: 'GC Next DB',
   description: 'Next.js + Tailwind CSS + Prisma + Postgres scaffold',
 }
 
