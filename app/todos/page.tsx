@@ -120,9 +120,9 @@ export default function TodosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Todo List</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Todo List</h1>
 
         {/* Create Todo Form */}
         <form onSubmit={createTodo} className="mb-8">
@@ -132,7 +132,7 @@ export default function TodosPage() {
               value={newTodoTitle}
               onChange={(e) => setNewTodoTitle(e.target.value)}
               placeholder="What needs to be done?"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               disabled={loading}
             />
             <button
@@ -148,12 +148,12 @@ export default function TodosPage() {
         {/* Todos List */}
         <div className="space-y-2">
           {todos.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No todos yet. Create one above!</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-8">No todos yet. Create one above!</p>
           ) : (
             todos.map((todo) => (
               <div
                 key={todo.id}
-                className="bg-white border border-gray-200 rounded-lg p-4 flex items-center gap-3 hover:shadow-md transition-shadow"
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center gap-3 hover:shadow-md transition-shadow"
               >
                 {/* Checkbox */}
                 <input
@@ -169,15 +169,15 @@ export default function TodosPage() {
                     type="text"
                     value={editingTitle}
                     onChange={(e) => setEditingTitle(e.target.value)}
-                    className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     autoFocus
                   />
                 ) : (
                   <span
                     className={`flex-1 ${
                       todo.completed
-                        ? 'line-through text-gray-500'
-                        : 'text-gray-900'
+                        ? 'line-through text-gray-500 dark:text-gray-400'
+                        : 'text-gray-900 dark:text-white'
                     }`}
                   >
                     {todo.title}
@@ -225,7 +225,7 @@ export default function TodosPage() {
 
         {/* Stats */}
         {todos.length > 0 && (
-          <div className="mt-6 text-sm text-gray-600 text-center">
+          <div className="mt-6 text-sm text-gray-600 dark:text-gray-400 text-center">
             {todos.filter(t => !t.completed).length} active, {todos.filter(t => t.completed).length} completed
           </div>
         )}
